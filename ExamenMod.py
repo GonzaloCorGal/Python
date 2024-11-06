@@ -17,7 +17,7 @@ import random
 listacanciones={}
 
 def cargar_lista():
-    fichero = open("playlist.txt","r")
+    fichero = open("playlist.txt2","r")
     for linea in fichero:
         cancion,artista = linea.strip().split(" - ") 
         listacanciones[cancion] = artista
@@ -85,7 +85,7 @@ def guardar_lista(listacanciones, nombre_archivo):
 
 
 cargar_lista()
-#print(listacanciones)
+print(listacanciones)
 #funciona
 
 #agregar_cancion(listacanciones,"feid","ferxxo100")
@@ -99,7 +99,7 @@ cargar_lista()
 #contar_canciones(listacanciones)
 #funciona
 
-buscar_por_artista(listacanciones,"Bob Dylan")
+#buscar_por_artista(listacanciones,"Bob Dylan")
 #funciona
 
 #ordenar_alfabeticamente(listacanciones)
