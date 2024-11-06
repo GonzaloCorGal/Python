@@ -14,20 +14,47 @@
 
 import random
 
-listacanciones={}
 
-def cargar_lista():
-    fichero = open("playlist.txt2","r")
+
+def cargar_lista(nombreFichero):
+   with open(nombreFichero,"r") as fichero:
+    listacanciones=[]
     for linea in fichero:
-        cancion,artista = linea.strip().split(" - ") 
-        listacanciones[cancion] = artista
-    fichero.close()
+        libreria = {}
+        cancion,artista,genero = linea.strip().split(" - ") 
+        libreria["Nombre"] = cancion
+        libreria["Artista"] = artista
+        libreria["Genero"] = genero
+        listacanciones.append(libreria)
+
+    return listacanciones
+
+def buscar_cancion(canciones,nombre):
+    encontrada = False
+    for i in canciones:
+        if i["Nombre"] == nombre:
+            encontrada = True
+            return encontrada
+        
+    return encontrada
+
+def agregar_cancion(canciones,nombrecancion,nombreartista,nombregenero):
+    if buscar_cancion(canciones,nombrecancion) == False:
+        cancion = {}
+        cancion["Nombre"] = nombrecancion
+        cancion["Artista"] = nombreartista
+        cancion["Genero"] = nombregenero
+        canciones.append(cancion)
+    else:
+        print(f"La cancion {nombrecancion} ya existe")
+
+#cargar lista
+#agregar cancion
+#eliminar cancion
+#guardar lista
 
 #FALLO GORDO, DECLARADO PRIMERO ARTISTA ANTES QUE CANCIÓN, TODO SALE DEL REVÉS
 #OTRO FALLO GORDO EN EL USO DEL SPLIT, ME SALÍAN LAS CANCIONES CON SEPARACIÓN AL FINAL Y ARTISTAS CON SEPARACION AL PRINCIPIO
-
-def agregar_cancion(listacanciones,artista,cancion):
-    listacanciones[cancion] = artista
 
 #agrega los valores a la lista que pasan como parametros
 
@@ -37,46 +64,6 @@ def eliminar_cancion(listacanciones,cancion):
 
 #USADA MAL LA SENTENCIA DEL, FALLO GORDO 
 
-def contar_canciones(listacanciones):
-    total= len(listacanciones)
-    return print(total)
-
-#FALLO GORDO, MAL USO DEL LEN, NO ERA LISTACANCIONES.LEN ESTO NO ES JAVA
-#MAL USO DEL RETURN, DEVUELVE ALGO QUE VALGA O QUE SE PUEDA USAR
-
-
-def buscar_por_artista(listacanciones,artista):
-    canciones_del_artista = [cancion for cancion, artista_nombre in listacanciones.items() if artista_nombre == artista]
-    
-    if canciones_del_artista:
-        print(f"Las canciones de '{artista}' son: {', '.join(canciones_del_artista)}")
-    else:
-        print(f"No se encontraron canciones de '{artista}' en el diccionario.")
-    
-    return canciones_del_artista
-
-#mal uso del return de nuevo, da algo que sirva de vuelta
-#AFECTABA EL MAL USO DEL SPLIT, JAMAS PILLABA ARTISTAS PORQUE SIEMPRE HABÍA UNA SEPARACIÓN AL PRINCIPIO
-
-def ordenar_alfabeticamente(listacanciones):
-    listado = (sorted(listacanciones.items()))
-    return print(listado)
-    
-#fallo de no usar el return de bien
-#he usado .get cosa que hace que casque, hace falta el .items, que devuelve todos los valores del diccionario
-
-def crear_lista_aleatoria(listacanciones,num):
-    canciones_lista = list(listacanciones.items()) #lista auxiliar que mete todo el contenido de el diccionario
-    num = min(num, len(canciones_lista)) #usamos la funcion min, que es una funcion que devuleve el menor de los valores a o b, en este caso tenemos
-    #así aunque el usuario de un numero mayor a las canciones siempre estará limitado, y se ajustará a lo pedido por el usuario
-    seleccionadas = []
-    while len(seleccionadas) < num:
-        cancion_aleatoria = random.choice(canciones_lista)
-        if cancion_aleatoria not in seleccionadas:
-            seleccionadas.append(cancion_aleatoria)
-    
-    return print(seleccionadas)
-
 def guardar_lista(listacanciones, nombre_archivo):
     with open(nombre_archivo, 'w') as archivo: #usamos w para ecribir
         for cancion, artista in listacanciones.items(): #for para recorrer los items
@@ -84,9 +71,10 @@ def guardar_lista(listacanciones, nombre_archivo):
             archivo.write(linea) #usamos .write para escribir, parará cuando no queden mas items en el diccionario
 
 
-cargar_lista()
-print(listacanciones)
-#funciona
+canciones = cargar_lista("playlist2.txt")
+print(canciones)
+agregar_cancion(canciones,"Ferxxo 100","Alvarito Diaz","Romantico")
+print(canciones)
 
 #agregar_cancion(listacanciones,"feid","ferxxo100")
 #print(listacanciones)
@@ -96,17 +84,6 @@ print(listacanciones)
 #print(listacanciones)
 #funciona
 
-#contar_canciones(listacanciones)
-#funciona
-
-#buscar_por_artista(listacanciones,"Bob Dylan")
-#funciona
-
-#ordenar_alfabeticamente(listacanciones)
-#funciona
-
-#crear_lista_aleatoria(listacanciones,7)
-#funciona
 
 
 
