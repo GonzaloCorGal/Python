@@ -99,7 +99,7 @@ cargar_lista()
 #contar_canciones(listacanciones)
 #funciona
 
-buscar_por_artista(listacanciones,"Bob Dylan")
+#buscar_por_artista(listacanciones,"Bob Dylan")
 #funciona
 
 #ordenar_alfabeticamente(listacanciones)

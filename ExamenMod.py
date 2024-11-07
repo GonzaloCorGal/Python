@@ -19,15 +19,19 @@ import random
 def cargar_lista(nombreFichero):
    with open(nombreFichero,"r") as fichero:
     listacanciones=[]
-    for linea in fichero:
-        libreria = {}
-        cancion,artista,genero = linea.strip().split(" - ") 
-        libreria["Nombre"] = cancion
-        libreria["Artista"] = artista
-        libreria["Genero"] = genero
-        listacanciones.append(libreria)
+    try:
+        for linea in fichero:
+            libreria = {}
+            cancion,artista,genero = linea.strip().split(" - ") 
+            libreria["Nombre"] = cancion
+            libreria["Artista"] = artista
+            libreria["Genero"] = genero
+            listacanciones.append(libreria)
 
-    return listacanciones
+        return listacanciones
+    except(FileNotFoundError):
+        print("Archivo no encontrado")
+        
 
 def buscar_cancion(canciones,nombre):
     encontrada = False
@@ -53,16 +57,11 @@ def agregar_cancion(canciones,nombrecancion,nombreartista,nombregenero):
 #eliminar cancion
 #guardar lista
 
-#FALLO GORDO, DECLARADO PRIMERO ARTISTA ANTES QUE CANCIÓN, TODO SALE DEL REVÉS
-#OTRO FALLO GORDO EN EL USO DEL SPLIT, ME SALÍAN LAS CANCIONES CON SEPARACIÓN AL FINAL Y ARTISTAS CON SEPARACION AL PRINCIPIO
-
-#agrega los valores a la lista que pasan como parametros
-
-def eliminar_cancion(listacanciones,cancion):
-    if cancion in listacanciones:
-        del listacanciones[cancion] 
-
-#USADA MAL LA SENTENCIA DEL, FALLO GORDO 
+def eliminar_cancion(listacanciones,nombrecancion):
+    if buscar_cancion(canciones,nombrecancion) == True:
+         canciones.remove(nombrecancion)
+    else:
+        print(f"La cancion {nombrecancion} no existe")
 
 def guardar_lista(listacanciones, nombre_archivo):
     with open(nombre_archivo, 'w') as archivo: #usamos w para ecribir
@@ -73,15 +72,12 @@ def guardar_lista(listacanciones, nombre_archivo):
 
 canciones = cargar_lista("playlist2.txt")
 print(canciones)
-agregar_cancion(canciones,"Ferxxo 100","Alvarito Diaz","Romantico")
+
+agregar_cancion(canciones,"XQ ERES ASI","Alvarito Diaz","Romantico")
 print(canciones)
 
-#agregar_cancion(listacanciones,"feid","ferxxo100")
-#print(listacanciones)
-#funciona
-
-#eliminar_cancion(listacanciones,"ferxxo100")
-#print(listacanciones)
+eliminar_cancion(canciones,"Tu cuerpo me llama")
+print(canciones)
 #funciona
 
 
