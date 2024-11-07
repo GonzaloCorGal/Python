@@ -1,20 +1,5 @@
-#linea.strip().split(“-”)
-#fichero.close
-#fichero.write(cosas)
-
-#del
-#len()
-#strip
-#split()
-
-#Escribe una función llamada cargar_lista que tome el nombre de un 
-#archivo de texto como argumento y devuelva un diccionario de canciones. 
-#Cada clave del diccionario debe ser el título de una canción y cada valor debe ser 
-#el nombre del artista.
-
 import random
-
-
+import json
 
 def cargar_lista(nombreFichero):
    with open(nombreFichero,"r") as fichero:
@@ -59,7 +44,9 @@ def agregar_cancion(canciones,nombrecancion,nombreartista,nombregenero):
 
 def eliminar_cancion(listacanciones,nombrecancion):
     if buscar_cancion(canciones,nombrecancion) == True:
-         canciones.remove(nombrecancion)
+        for i in canciones:
+            if i.get("Nombre") == nombrecancion:
+              canciones.remove(i)  
     else:
         print(f"La cancion {nombrecancion} no existe")
 
@@ -68,6 +55,15 @@ def guardar_lista(listacanciones, nombre_archivo):
         for cancion, artista in listacanciones.items(): #for para recorrer los items
             linea = f"{cancion} - {artista}\n" #maquetacion de linea que sera escrita
             archivo.write(linea) #usamos .write para escribir, parará cuando no queden mas items en el diccionario
+
+#def cargar_json(nombreFichero):
+
+    
+
+
+def guardar_json(canciones,nombre_Archivo):
+    with open(nombre_Archivo,"w") as fichero:
+      json.dump(canciones,fichero)  
 
 
 canciones = cargar_lista("playlist2.txt")
@@ -80,6 +76,7 @@ eliminar_cancion(canciones,"Tu cuerpo me llama")
 print(canciones)
 #funciona
 
+guardar_json(canciones,"jsonFichero")
 
 
 
