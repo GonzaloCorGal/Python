@@ -62,8 +62,8 @@ def guardar_lista(listacanciones, nombre_archivo):
 
 
 def guardar_json(canciones,nombre_Archivo):
-    with open(nombre_Archivo,"w") as fichero:
-      json.dump(canciones,fichero)  
+    with open(nombre_Archivo,"w", encoding='utf-8') as fichero:
+      json.dump(canciones,fichero, indent=4, ensure_ascii=False)  
 
 
 canciones = cargar_lista("playlist2.txt")
@@ -76,7 +76,7 @@ eliminar_cancion(canciones,"Tu cuerpo me llama")
 print(canciones)
 #funciona
 
-guardar_json(canciones,"jsonFichero")
+guardar_json(canciones,"jsonFichero.json")
 
 
 
